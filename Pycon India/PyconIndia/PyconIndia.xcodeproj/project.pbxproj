@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8BD0C8E56B6DDFF916BEE13B /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 923FD806EA4F6931803CA4EA /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		DF93CDFD1B3FA6C000492CB6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF93CDFC1B3FA6C000492CB6 /* AppDelegate.swift */; };
 		DF93CDFF1B3FA6C000492CB6 /* PyconViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF93CDFE1B3FA6C000492CB6 /* PyconViewController.swift */; };
 		DF93CE021B3FA6C000492CB6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF93CE001B3FA6C000492CB6 /* Main.storyboard */; };
@@ -15,6 +16,7 @@
 		DF93CE1D1B3FACA700492CB6 /* ScheduleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF93CE1C1B3FACA700492CB6 /* ScheduleController.swift */; };
 		DF93CE1F1B3FAD2700492CB6 /* PresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF93CE1E1B3FAD2700492CB6 /* PresentationController.swift */; };
 		DF93CE211B3FAD6F00492CB6 /* FeedbackController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF93CE201B3FAD6F00492CB6 /* FeedbackController.swift */; };
+		DF93CE231B41D2FA00492CB6 /* cloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF93CE221B41D2FA00492CB6 /* cloud.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,6 +30,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		481B3A6CC5945030D0A0B5DA /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		923FD806EA4F6931803CA4EA /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		95B33952CD17D6F3815C218C /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		DF93CDF71B3FA6C000492CB6 /* PyconIndia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PyconIndia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF93CDFB1B3FA6C000492CB6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DF93CDFC1B3FA6C000492CB6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -40,6 +45,7 @@
 		DF93CE1C1B3FACA700492CB6 /* ScheduleController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleController.swift; sourceTree = "<group>"; };
 		DF93CE1E1B3FAD2700492CB6 /* PresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentationController.swift; sourceTree = "<group>"; };
 		DF93CE201B3FAD6F00492CB6 /* FeedbackController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackController.swift; sourceTree = "<group>"; };
+		DF93CE221B41D2FA00492CB6 /* cloud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cloud.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BD0C8E56B6DDFF916BEE13B /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,12 +67,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1AC0310E2491035D2921F0C1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				923FD806EA4F6931803CA4EA /* Pods.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3DAB38CE9C167A2FAEA57227 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				95B33952CD17D6F3815C218C /* Pods.debug.xcconfig */,
+				481B3A6CC5945030D0A0B5DA /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		DF93CDEE1B3FA6C000492CB6 = {
 			isa = PBXGroup;
 			children = (
 				DF93CDF91B3FA6C000492CB6 /* PyconIndia */,
 				DF93CE0F1B3FA6C000492CB6 /* PyconIndiaTests */,
 				DF93CDF81B3FA6C000492CB6 /* Products */,
+				3DAB38CE9C167A2FAEA57227 /* Pods */,
+				1AC0310E2491035D2921F0C1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -89,6 +115,7 @@
 				DF93CE1C1B3FACA700492CB6 /* ScheduleController.swift */,
 				DF93CE1E1B3FAD2700492CB6 /* PresentationController.swift */,
 				DF93CE201B3FAD6F00492CB6 /* FeedbackController.swift */,
+				DF93CE221B41D2FA00492CB6 /* cloud.swift */,
 			);
 			path = PyconIndia;
 			sourceTree = "<group>";
@@ -125,9 +152,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DF93CE161B3FA6C000492CB6 /* Build configuration list for PBXNativeTarget "PyconIndia" */;
 			buildPhases = (
+				C1F1B207C20F6720E2F1F141 /* Check Pods Manifest.lock */,
 				DF93CDF31B3FA6C000492CB6 /* Sources */,
 				DF93CDF41B3FA6C000492CB6 /* Frameworks */,
 				DF93CDF51B3FA6C000492CB6 /* Resources */,
+				EDAAE9DD15DFD06112671559 /* Embed Pods Frameworks */,
+				B3DFBA47832910DE017F6BEA /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -212,6 +242,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		B3DFBA47832910DE017F6BEA /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C1F1B207C20F6720E2F1F141 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		EDAAE9DD15DFD06112671559 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		DF93CDF31B3FA6C000492CB6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -222,6 +300,7 @@
 				DF93CDFD1B3FA6C000492CB6 /* AppDelegate.swift in Sources */,
 				DF93CE1D1B3FACA700492CB6 /* ScheduleController.swift in Sources */,
 				DF93CE1F1B3FAD2700492CB6 /* PresentationController.swift in Sources */,
+				DF93CE231B41D2FA00492CB6 /* cloud.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,6 +419,7 @@
 		};
 		DF93CE171B3FA6C000492CB6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 95B33952CD17D6F3815C218C /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = PyconIndia/Info.plist;
@@ -350,6 +430,7 @@
 		};
 		DF93CE181B3FA6C000492CB6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 481B3A6CC5945030D0A0B5DA /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = PyconIndia/Info.plist;
@@ -411,6 +492,7 @@
 				DF93CE181B3FA6C000492CB6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DF93CE191B3FA6C000492CB6 /* Build configuration list for PBXNativeTarget "PyconIndiaTests" */ = {
 			isa = XCConfigurationList;
@@ -419,6 +501,7 @@
 				DF93CE1B1B3FA6C000492CB6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
