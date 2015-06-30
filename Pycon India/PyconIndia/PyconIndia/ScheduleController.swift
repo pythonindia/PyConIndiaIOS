@@ -11,4 +11,15 @@ import Foundation
 // The schedule
 class ScheduleController: PyConIndiaViewController {
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        println("Getting schedule")
+        cloud.getSchedule({
+            response in
+                println(response)
+            },
+            error: nil
+        )
+    }
+
 }

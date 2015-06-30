@@ -11,6 +11,8 @@ import UIKit
 // Common view controller functions will be here and other view controllers inherit from this.
 class PyConIndiaViewController: UIViewController {
 
+    let cloud = Cloud()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
