@@ -23,6 +23,21 @@ class PyConIndiaViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    func createSimpleLogo() {
+        var backIcon = UIImage(named: "images/footerlogo.png")
+        var backView = UIImageView(frame: CGRectMake(0.0, 0.0, 30.0, 30.0))
+        backView.image = backIcon
+        backView.contentMode = UIViewContentMode.ScaleAspectFit
+        var responseButton = UIButton(frame: backView.frame)
+        responseButton.addTarget(self, action: "backButtonPressed", forControlEvents: UIControlEvents.TouchUpInside)
+        backView.addSubview(responseButton)
+        var backButton = UIBarButtonItem(customView: backView)
+        self.navigationItem.leftBarButtonItem = backButton
+    }
+
+    func backButtonPressed() {
+
+    }
 
 }
 

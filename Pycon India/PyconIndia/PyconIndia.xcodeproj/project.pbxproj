@@ -16,7 +16,9 @@
 		DF93CE1D1B3FACA700492CB6 /* ScheduleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF93CE1C1B3FACA700492CB6 /* ScheduleController.swift */; };
 		DF93CE1F1B3FAD2700492CB6 /* PresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF93CE1E1B3FAD2700492CB6 /* PresentationController.swift */; };
 		DF93CE211B3FAD6F00492CB6 /* FeedbackController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF93CE201B3FAD6F00492CB6 /* FeedbackController.swift */; };
-		DF93CE231B41D2FA00492CB6 /* cloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF93CE221B41D2FA00492CB6 /* cloud.swift */; };
+		DF93CE231B41D2FA00492CB6 /* Cloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF93CE221B41D2FA00492CB6 /* Cloud.swift */; };
+		DFF59B421B45562300C80C2D /* tabbedPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF59B411B45562300C80C2D /* tabbedPageView.swift */; };
+		DFF59B431B45B4F900C80C2D /* images in Resources */ = {isa = PBXBuildFile; fileRef = DFB4AA251B45537F00CD0C6E /* images */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,7 +47,9 @@
 		DF93CE1C1B3FACA700492CB6 /* ScheduleController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleController.swift; sourceTree = "<group>"; };
 		DF93CE1E1B3FAD2700492CB6 /* PresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentationController.swift; sourceTree = "<group>"; };
 		DF93CE201B3FAD6F00492CB6 /* FeedbackController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackController.swift; sourceTree = "<group>"; };
-		DF93CE221B41D2FA00492CB6 /* cloud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cloud.swift; sourceTree = "<group>"; };
+		DF93CE221B41D2FA00492CB6 /* Cloud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cloud.swift; sourceTree = "<group>"; };
+		DFB4AA251B45537F00CD0C6E /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = images; sourceTree = "<group>"; };
+		DFF59B411B45562300C80C2D /* tabbedPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = tabbedPageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +111,7 @@
 		DF93CDF91B3FA6C000492CB6 /* PyconIndia */ = {
 			isa = PBXGroup;
 			children = (
+				DFB4AA251B45537F00CD0C6E /* images */,
 				DF93CDFC1B3FA6C000492CB6 /* AppDelegate.swift */,
 				DF93CDFE1B3FA6C000492CB6 /* PyconViewController.swift */,
 				DF93CE001B3FA6C000492CB6 /* Main.storyboard */,
@@ -115,7 +120,8 @@
 				DF93CE1C1B3FACA700492CB6 /* ScheduleController.swift */,
 				DF93CE1E1B3FAD2700492CB6 /* PresentationController.swift */,
 				DF93CE201B3FAD6F00492CB6 /* FeedbackController.swift */,
-				DF93CE221B41D2FA00492CB6 /* cloud.swift */,
+				DF93CE221B41D2FA00492CB6 /* Cloud.swift */,
+				DFF59B411B45562300C80C2D /* tabbedPageView.swift */,
 			);
 			path = PyconIndia;
 			sourceTree = "<group>";
@@ -228,6 +234,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DFF59B431B45B4F900C80C2D /* images in Resources */,
 				DF93CE021B3FA6C000492CB6 /* Main.storyboard in Resources */,
 				DF93CE041B3FA6C000492CB6 /* Images.xcassets in Resources */,
 			);
@@ -300,7 +307,8 @@
 				DF93CDFD1B3FA6C000492CB6 /* AppDelegate.swift in Sources */,
 				DF93CE1D1B3FACA700492CB6 /* ScheduleController.swift in Sources */,
 				DF93CE1F1B3FAD2700492CB6 /* PresentationController.swift in Sources */,
-				DF93CE231B41D2FA00492CB6 /* cloud.swift in Sources */,
+				DFF59B421B45562300C80C2D /* tabbedPageView.swift in Sources */,
+				DF93CE231B41D2FA00492CB6 /* Cloud.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
