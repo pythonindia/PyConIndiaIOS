@@ -146,7 +146,7 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
 
         for slot in slots {
             let sessions = slot["sessions"].arrayValue
-            var slotView = UIView(frame: CGRectMake(8.0, top, pageView.frame.size.width - 16.0, 80.0 * CGFloat(sessions.count)))
+            var slotView = UIView(frame: CGRectMake(8.0, top, pageView.frame.size.width - 16.0, 100.0 * CGFloat(sessions.count)))
             top = CGRectGetMaxY(slotView.frame) + 28.0
             pageView.addSubview(slotView)
 
@@ -186,7 +186,7 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
 
             for (index, session) in enumerate(sessions) {
                 let room_id = session["room_id"].intValue
-                let audiImage = UIImageView(frame: CGRectMake(0, CGFloat(index) * 80.0, 15.0, 15.0))
+                let audiImage = UIImageView(frame: CGRectMake(0, CGFloat(index) * 100.0, 15.0, 15.0))
                 audiImage.contentMode = UIViewContentMode.ScaleAspectFit
                 audiImage.image = roomIdImage[room_id]
                 audiImage.center = CGPointMake(iconsContainer.frame.size.width / 2, audiImage.center.y)
@@ -221,24 +221,26 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
             slotView.addSubview(textContainer)
 
             for (index, session) in enumerate(sessions) {
-                let heading = UILabel()
+                let heading = UILabel(frame: CGRectMake(0, CGFloat(index) * 100.0, CGRectGetWidth(textContainer.frame), 0.0))
                 heading.lineBreakMode = NSLineBreakMode.ByWordWrapping
                 heading.numberOfLines = 0
-                heading.font = UIFont(name: "HelveticaNeue-Bold", size: 13.0)
-                heading.text = "Analyzing arguments during a debate using Natural Language Processing in Python"//session["title"].stringValue
+                heading.adjustsFontSizeToFitWidth = true
+                heading.text = session["title"].stringValue
+                heading.font = UIFont(name: "HelveticaNeue-Bold", size: 11.0)
 
-                var options: NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
-                var labelRect = heading.attributedText.boundingRectWithSize(CGSizeMake(heading.frame.size.width, CGFloat.max), options: options, context: nil)
-                heading.frame = CGRectMake(0, CGFloat(index) * 80.0, CGRectGetWidth(textContainer.frame), labelRect.size.height)
+                var options: NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin | NSStringDrawingOptions.UsesFontLeading
+                var labelRect = heading.attributedText.boundingRectWithSize(CGSizeMake(heading.frame.size.width, 35.0), options: options, context: nil)
+                heading.frame = CGRectMake(0, CGFloat(index) * 100.0, CGRectGetWidth(textContainer.frame), labelRect.size.height)
+                heading.sizeToFit()
                 textContainer.addSubview(heading)
 
-                let description = UILabel()
+                let description = UILabel(frame: CGRectMake(0, CGRectGetMaxY(heading.frame) + 1.0, CGRectGetWidth(textContainer.frame), 0.0))
                 description.lineBreakMode = NSLineBreakMode.ByWordWrapping
-                description.numberOfLines = 0
-                description.font = UIFont(name: "HelveticaNeue-Light", size: 8.0)
-                description.text = "This talk will guide you through the application of Python NLP Techniques to analyze arguments during a debate and define a strategy to figure out the winner of the debate on the basis of strength and relevance of the arguments."//session["description"].stringValue
+                description.numberOfLines = 4
+                description.font = UIFont(name: "HelveticaNeue-Light", size: 9.0)
+                description.text = session["description"].stringValue
 
-                options = NSStringDrawingOptions.UsesLineFragmentOrigin
+                options = NSStringDrawingOptions.UsesLineFragmentOrigin | NSStringDrawingOptions.UsesFontLeading
                 labelRect = description.attributedText.boundingRectWithSize(CGSizeMake(description.frame.size.width, CGFloat.max), options: options, context: nil)
                 description.frame = CGRectMake(0, CGRectGetMaxY(heading.frame) + 1.0, CGRectGetWidth(textContainer.frame), labelRect.size.height)
                 textContainer.addSubview(description)
