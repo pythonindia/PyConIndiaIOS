@@ -61,21 +61,20 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
             loadPage(index)
         }
 
-        cloud.getSchedule({
-            response in
-            let rms = response["rooms"].arrayValue
-            for rm in rms {
-                let id = rm["id"].intValue
-                let name = rm["name"].stringValue
-                let floor = rm["floor"].stringValue
-                let note = rm["note"].stringValue
-                let room = Room(id: id, name: name, floor: floor, note: note)
-                self.rooms[id] = room
-            }
-            self.designSchedules(response)
-        },
-        error: nil
-        )
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let scheduleString = defaults.stringForKey("schedule")!
+        let response = JSON(data: scheduleString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)!)
+
+        let rms = response["rooms"].arrayValue
+        for rm in rms {
+            let id = rm["id"].intValue
+            let name = rm["name"].stringValue
+            let floor = rm["floor"].stringValue
+            let note = rm["note"].stringValue
+            let room = Room(id: id, name: name, floor: floor, note: note)
+            self.rooms[id] = room
+        }
+        self.designSchedules(response)
     }
 
     // Returns the current day of the hackathon

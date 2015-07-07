@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="jMB-7R-EiK">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="S4T-Ok-qxk">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -7,8 +7,7 @@
         <!--Schedule Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <viewController id="BYZ-38-t0r" customClass="ScheduleController" customModule="PyconIndia" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ScheduleController" customModule="PyconIndia" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -23,13 +22,14 @@
                         <segue destination="K5V-SU-T9T" kind="show" identifier="toPresentationController" id="flT-C8-HQC"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1240" y="415"/>
+            <point key="canvasLocation" x="1992" y="423"/>
         </scene>
         <!--Presentation Controller-->
         <scene sceneID="7xT-kq-B9e">
             <objects>
-                <viewController id="K5V-SU-T9T" customClass="PresentationController" customModule="PyconIndia" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="K5V-SU-T9T" customClass="PresentationController" customModule="PyconIndia" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="k6b-ei-opT"/>
                         <viewControllerLayoutGuide type="bottom" id="7Ym-Ff-cZz"/>
@@ -45,25 +45,29 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2AL-TW-9fu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1240" y="1121"/>
+            <point key="canvasLocation" x="1664" y="1205"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="psB-jw-Tww">
+        <!--Splash Controller-->
+        <scene sceneID="LcE-4m-RSE">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="jMB-7R-EiK" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="A1l-FV-kdT">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
+                <viewController id="HwI-mW-wUR" customClass="SplashController" customModule="PyconIndia" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ZZ1-uL-dAI"/>
+                        <viewControllerLayoutGuide type="bottom" id="XI5-EU-Rma"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="i4W-U2-pDn">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="eEa-cA-Xna"/>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="ArY-AE-4rt"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="toScheduleController" id="zri-cI-BhO"/>
                     </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="0IR-YH-17K" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="d6k-fO-439" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="485" y="415"/>
+            <point key="canvasLocation" x="1226" y="423"/>
         </scene>
         <!--Feedback Controller-->
         <scene sceneID="1Bs-8c-chn">
@@ -81,7 +85,25 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oxQ-2n-ftM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="485" y="1121"/>
+            <point key="canvasLocation" x="681" y="1189"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="PTW-bZ-RUS">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="S4T-Ok-qxk" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ZUR-mx-dcC">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="HwI-mW-wUR" kind="relationship" relationship="rootViewController" id="hdf-sH-DuT"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="le3-Cy-lO1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="413" y="423"/>
         </scene>
     </scenes>
 </document>
