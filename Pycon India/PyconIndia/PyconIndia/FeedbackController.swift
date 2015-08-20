@@ -12,4 +12,11 @@ import Foundation
 // Feedback of each presentation
 class FeedbackController: PyConIndiaViewController {
 
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+
+    init() {
+        super.init(nibName: nil, bundle: nil)
+    }
 }

@@ -11,4 +11,12 @@ import Foundation
 // Contains details of a presentation: Talks / Workshops
 class PresentationController: PyConIndiaViewController {
 
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+
+    init() {
+        super.init(nibName: nil, bundle: nil)
+    }
+
 }

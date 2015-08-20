@@ -12,8 +12,18 @@ import UIKit
 class SplashController: PyConIndiaViewController {
 
     var logo = UIImageView(frame: CGRectMake(0, 0, 300.0, 300.0))
+    var loader = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+
+    init() {
+        super.init(nibName: nil, bundle: nil)
+    }
 
     override func viewDidLoad() {
+        view.backgroundColor = UIColor.whiteColor()
         logo.center = view.center
         view.addSubview(logo)
 
@@ -22,13 +32,19 @@ class SplashController: PyConIndiaViewController {
         logo.contentMode = .ScaleAspectFit
         logo.image = image
 
-        animateLogo()
+        loader.center = CGPointMake(view.center.x, CGRectGetMaxY(logo.frame) + 10.0)
+        loader.hidesWhenStopped = true
+        view.addSubview(loader)
+        loader.startAnimating()
+
         cloud.getSchedule({
             response in
+            self.loader.stopAnimating()
             self.view.layer.removeAllAnimations()
             let responseString = response.rawString()!
             defaults.setValue(responseString, forKey: "schedule")
-            self.performSegueWithIdentifier("toScheduleController", sender: self)
+            let schedule = ScheduleController()
+            self.navigationController?.pushViewController(schedule, animated: true)
             },
             error: nil
         )

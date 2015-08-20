@@ -17,6 +17,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
 
+        let rootViewController = SplashController()
+        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        let navigationController = UINavigationController(rootViewController: rootViewController)
+        self.window!.rootViewController = navigationController
+        self.window!.backgroundColor = UIColor.whiteColor()
+        self.window!.makeKeyAndVisible()
         // Custmoize the navigation bar
         var navigationBarAppearance = UINavigationBar.appearance()
         navigationBarAppearance.barStyle = UIBarStyle.Black

@@ -34,6 +34,14 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
     let feedbackInactiveImage = UIImage(named: "images/pyconFeedback.png")!
     let feedbackActiveImage = UIImage(named: "images/pyconFeedbackActive.png")!
 
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+
+    init() {
+        super.init(nibName: nil, bundle: nil)
+    }
+
     override func viewDidLoad() {
         self.automaticallyAdjustsScrollViewInsets = false
         super.viewDidLoad()
@@ -41,6 +49,7 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
         createSimpleLogo()
         self.title = "PyConIndia 2015"
         self.designPager()
+        view.backgroundColor = UIColor.whiteColor()
 
         var top = navigationController!.navigationBar.frame.size.height + UIApplication.sharedApplication().statusBarFrame.size.height
 
@@ -56,7 +65,7 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
         self.scrollView.contentSize = CGSize(width: pagesScrollViewSize.width * 3.0, height: pagesScrollViewSize.height)
         self.view.addSubview(scrollView)
 
-        seupPages(true)
+        setupPages(true)
         for index in 1...3 {
             loadPage(index)
         }
@@ -96,7 +105,7 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
         }
     }
 
-    func seupPages(firstTime: Bool) {
+    func setupPages(firstTime: Bool) {
         let pageWidth = scrollView.frame.size.width
         let page = firstTime ? determineDay() : Int(floor((scrollView.contentOffset.x * 2.0 + pageWidth) / (pageWidth * 2.0))) + 1
 
@@ -123,7 +132,7 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
     }
 
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        seupPages(false)
+        setupPages(false)
     }
 
     func designSchedules(data: JSON) {
@@ -197,20 +206,27 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
                 audiLabel.textAlignment = .Center
                 iconsContainer.addSubview(audiLabel)
 
-                let favoriteImageView = UIImageView(frame: CGRectMake((CGRectGetWidth(iconsContainer.frame) - 40.0) / 2.0, CGRectGetMaxY(audiLabel.frame) + 20.0, 15.0, 15.0))
-                favoriteImageView.userInteractionEnabled = true
+                let favoriteView = UIView(frame: CGRectMake((CGRectGetWidth(iconsContainer.frame) -  50.0) / 2.0, CGRectGetMaxY(audiLabel.frame) + 20.0, 25.0, 25.0))
+                iconsContainer.addSubview(favoriteView)
+                let favoriteImageView = UIImageView(frame: CGRectMake(5.0, 5.0, 15.0, 15.0))
+                favoriteImageView.userInteractionEnabled = false
                 favoriteImageView.contentMode = UIViewContentMode.ScaleAspectFit
                 favoriteImageView.image = favoriteInactiveImage
-                favoriteImageView.tag = session["session_id"].intValue
-                iconsContainer.addSubview(favoriteImageView)
+                favoriteView.tag = session["session_id"].intValue
+                favoriteView.addSubview(favoriteImageView)
                 let favoriteViewTap = UITapGestureRecognizer(target: self, action: Selector("favoriteTapped:"))
-                favoriteImageView.addGestureRecognizer(favoriteViewTap)
+                favoriteView.addGestureRecognizer(favoriteViewTap)
 
-                let feedbackImageView = UIImageView(frame: CGRectMake(CGRectGetMaxX(favoriteImageView.frame) + 10.0, CGRectGetMaxY(audiLabel.frame) + 20.0, 15.0, 15.0))
-                feedbackImageView.userInteractionEnabled = true
+                let feedbackView = UIView(frame: CGRectMake(CGRectGetMaxX(favoriteView.frame), CGRectGetMaxY(audiLabel.frame) + 20.0, 25.0, 25.0))
+                iconsContainer.addSubview(feedbackView)
+                let feedbackImageView = UIImageView(frame: CGRectMake(5.0, 5.0, 15.0, 15.0))
+                feedbackImageView.userInteractionEnabled = false
                 feedbackImageView.contentMode = UIViewContentMode.ScaleAspectFit
                 feedbackImageView.image = feedbackInactiveImage
-                iconsContainer.addSubview(feedbackImageView)
+                feedbackView.tag = session["session_id"].intValue
+                feedbackView.addSubview(feedbackImageView)
+                let feedbackViewTap = UITapGestureRecognizer(target: self, action: Selector("feedbackTapped:"))
+                feedbackView.addGestureRecognizer(feedbackViewTap)
 
                 favoriteSessionIdMap[String(session["session_id"].intValue)] = 0
                 feedbackSessionIdMap[String(session["session_id"].intValue)] = 0
@@ -254,14 +270,38 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
         pageView.contentSize = CGSizeMake(pageView.contentSize.width, top)
     }
 
+    func feedbackTapped(sender: UITapGestureRecognizer) {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        var feedbackSessionIdMap = defaults.dictionaryForKey("feedbackSessionIdMap") as! [String: Int]
+        let setValue = feedbackSessionIdMap[String(sender.view!.tag)]
+        let valueToSet = setValue == 0 ? 1 : 0
+
+        if let view = sender.view {
+            for subview in view.subviews {
+                if let imageView = subview as? UIImageView {
+                    imageView.image = valueToSet == 0 ? feedbackInactiveImage : feedbackActiveImage
+                }
+            }
+        }
+
+        feedbackSessionIdMap[String(sender.view!.tag)] = valueToSet
+        defaults.setObject(feedbackSessionIdMap, forKey: "feedbackSessionIdMap")
+        defaults.synchronize()
+        println(feedbackSessionIdMap)
+    }
+
     func favoriteTapped(sender: UITapGestureRecognizer) {
         let defaults = NSUserDefaults.standardUserDefaults()
         var favoriteSessionIdMap = defaults.dictionaryForKey("favoriteSessionIdMap") as! [String: Int]
         let setValue = favoriteSessionIdMap[String(sender.view!.tag)]
         let valueToSet = setValue == 0 ? 1 : 0
 
-        if let view = sender.view as? UIImageView {
-            view.image = valueToSet == 0 ? favoriteInactiveImage : favoriteActiveImage
+        if let view = sender.view {
+            for subview in view.subviews {
+                if let imageView = subview as? UIImageView {
+                    imageView.image = valueToSet == 0 ? favoriteInactiveImage : favoriteActiveImage
+                }
+            }
         }
 
         favoriteSessionIdMap[String(sender.view!.tag)] = valueToSet

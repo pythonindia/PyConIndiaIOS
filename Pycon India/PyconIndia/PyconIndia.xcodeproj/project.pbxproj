@@ -11,7 +11,6 @@
 		DF7A39241B47EAD8006014F1 /* SplashController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7A39231B47EAD8006014F1 /* SplashController.swift */; };
 		DF93CDFD1B3FA6C000492CB6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF93CDFC1B3FA6C000492CB6 /* AppDelegate.swift */; };
 		DF93CDFF1B3FA6C000492CB6 /* PyconViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF93CDFE1B3FA6C000492CB6 /* PyconViewController.swift */; };
-		DF93CE021B3FA6C000492CB6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF93CE001B3FA6C000492CB6 /* Main.storyboard */; };
 		DF93CE041B3FA6C000492CB6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF93CE031B3FA6C000492CB6 /* Images.xcassets */; };
 		DF93CE131B3FA6C000492CB6 /* PyconIndiaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF93CE121B3FA6C000492CB6 /* PyconIndiaTests.swift */; };
 		DF93CE1D1B3FACA700492CB6 /* ScheduleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF93CE1C1B3FACA700492CB6 /* ScheduleController.swift */; };
@@ -42,7 +41,6 @@
 		DF93CDFB1B3FA6C000492CB6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DF93CDFC1B3FA6C000492CB6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DF93CDFE1B3FA6C000492CB6 /* PyconViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PyconViewController.swift; sourceTree = "<group>"; };
-		DF93CE011B3FA6C000492CB6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DF93CE031B3FA6C000492CB6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		DF93CE0C1B3FA6C000492CB6 /* PyconIndiaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PyconIndiaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF93CE111B3FA6C000492CB6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -118,7 +116,6 @@
 				DFB4AA251B45537F00CD0C6E /* images */,
 				DF93CDFC1B3FA6C000492CB6 /* AppDelegate.swift */,
 				DF93CDFE1B3FA6C000492CB6 /* PyconViewController.swift */,
-				DF93CE001B3FA6C000492CB6 /* Main.storyboard */,
 				DF93CE031B3FA6C000492CB6 /* Images.xcassets */,
 				DF93CDFA1B3FA6C000492CB6 /* Supporting Files */,
 				DF93CE1C1B3FACA700492CB6 /* ScheduleController.swift */,
@@ -241,7 +238,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DFF59B431B45B4F900C80C2D /* images in Resources */,
-				DF93CE021B3FA6C000492CB6 /* Main.storyboard in Resources */,
 				DF93CE041B3FA6C000492CB6 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -337,17 +333,6 @@
 			targetProxy = DF93CE0D1B3FA6C000492CB6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		DF93CE001B3FA6C000492CB6 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DF93CE011B3FA6C000492CB6 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		DF93CE141B3FA6C000492CB6 /* Debug */ = {
