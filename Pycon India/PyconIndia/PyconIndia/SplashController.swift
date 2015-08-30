@@ -38,23 +38,21 @@ class SplashController: PyConIndiaViewController {
         loader.startAnimating()
 
         cloud.getSchedule({
-            response in
-            self.loader.stopAnimating()
-            self.view.layer.removeAllAnimations()
-            let responseString = response.rawString()!
-            defaults.setValue(responseString, forKey: "schedule")
-            let schedule = ScheduleController()
-            self.navigationController?.pushViewController(schedule, animated: true)
+            scheduleResponse in
+                let scheduleResponseString = scheduleResponse.rawString()!
+                defaults.setValue(scheduleResponseString, forKey: "schedule")
+                self.cloud.getRooms({
+                     roomResponse in
+                        self.loader.stopAnimating()
+                        let roomsResponseString = roomResponse.rawString()
+                        defaults.setValue(roomsResponseString, forKey: "rooms")
+                        let schedule = ScheduleController()
+                        self.navigationController?.pushViewController(schedule, animated: true)
+                }, error: nil)
             },
             error: nil
         )
 
-    }
-
-    func animateLogo() {
-        UIView.animateWithDuration(2.5, delay: 0.0, options: UIViewAnimationOptions.Repeat | UIViewAnimationOptions.CurveEaseInOut | UIViewAnimationOptions.Autoreverse, animations: {
-            },
-            completion: nil)
     }
 
 }

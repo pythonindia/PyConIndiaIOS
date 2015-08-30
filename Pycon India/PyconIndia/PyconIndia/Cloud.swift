@@ -13,7 +13,7 @@ import Alamofire
 // All API related code here.
 class Cloud {
 
-    let BASE_URL = "https://junctiondemo.herokuapp.com/a-porro-conference/schedule/dummy_schedule/"
+    let BASE_URL = "https://in.pycon.org/cfp/api/v1/"
 
     func apiRequest(path: String, method: Alamofire.Method = .GET, parameters: [String: AnyObject] = [:], successCallback: ((JSON) -> ())?, errorCallback: ((NSError) -> ())?) {
 
@@ -29,7 +29,18 @@ class Cloud {
     }
 
     func getSchedule(success: ((JSON) -> ())?, error: ((NSError) -> ())?) {
-        self.apiRequest(BASE_URL,
+        let path = BASE_URL + "schedules/?conference=1"
+        self.apiRequest(path,
+            successCallback: {
+                response in
+                success?(response)
+            },
+            errorCallback: nil)
+    }
+
+    func getRooms(success: ((JSON) -> ())?, error: ((NSError) -> ())?) {
+        let path = BASE_URL + "rooms/?venue=1"
+        self.apiRequest(path,
             successCallback: {
                 response in
                 success?(response)

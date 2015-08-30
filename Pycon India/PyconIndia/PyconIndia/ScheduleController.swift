@@ -33,6 +33,9 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
 
     let feedbackInactiveImage = UIImage(named: "images/pyconFeedback.png")!
     let feedbackActiveImage = UIImage(named: "images/pyconFeedbackActive.png")!
+    let DAY1 = "2015-10-02"
+    let DAY2 = "2015-10-03"
+    let DAY3 = "2015-10-04"
 
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -72,18 +75,19 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
 
         let defaults = NSUserDefaults.standardUserDefaults()
         let scheduleString = defaults.stringForKey("schedule")!
-        let response = JSON(data: scheduleString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)!)
+        let roomString = defaults.stringForKey("rooms")!
+        let scheduleResponse = JSON(data: scheduleString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)!)
+        let roomResponse = JSON(data: roomString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)!)
 
-        let rms = response["rooms"].arrayValue
+        let rms = roomResponse.arrayValue
         for rm in rms {
             let id = rm["id"].intValue
             let name = rm["name"].stringValue
-            let floor = rm["floor"].stringValue
             let note = rm["note"].stringValue
-            let room = Room(id: id, name: name, floor: floor, note: note)
+            let room = Room(id: id, name: name, note: note)
             self.rooms[id] = room
         }
-        self.designSchedules(response)
+        self.designSchedules(scheduleResponse)
     }
 
     // Returns the current day of the hackathon
@@ -136,24 +140,43 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
     }
 
     func designSchedules(data: JSON) {
-        let daysJson = data["conference"]["days"].arrayValue
+        let daysJson = data
 
-        for (day, dayJson) in enumerate(daysJson) {
-            let pageView = pageViews[day]
-            designSchedule(dayJson, day: day, pageView: pageView)
+        var dayNumber = 0
+        for (date, dayJson) in daysJson {
+            let pageView = pageViews[dayNumber]
+            designSchedule(dayJson, day: dayNumber, pageView: pageView)
+            dayNumber += 1
         }
+    }
+
+    func timeToDate(time: String) -> NSDate {
+        return time.toDate(format: DateFormat.Custom("HH:mm:ss"))!
     }
 
     func designSchedule(details: JSON, day: Int, pageView: UIScrollView) {
 
         var top: CGFloat = 28.0
-        let slots = details["slots"].arrayValue
+        let slots = details
 
         var favoriteSessionIdMap: [String: AnyObject] = [:]
         var feedbackSessionIdMap: [String: AnyObject] = [:]
+        var slotsArray: [(NSDate, JSON)] = []
+        var timeNsDate: [NSDate : String] = [:]
+        for (time, slot) in slots {
+            let start_end_time_array = time.explode("-")
+            let start_time = timeToDate(start_end_time_array[0].trimmed())
+            timeNsDate[start_time] = time
+            let end_time = timeToDate(start_end_time_array[1].trimmed())
+            slotsArray.append((start_time, slot))
+        }
+        slotsArray.sort({ $0.0 < $1.0 })
 
-        for slot in slots {
-            let sessions = slot["sessions"].arrayValue
+        for (time, slot) in slotsArray {
+            let start_end_time_array = timeNsDate[time]!.explode("-")
+            let start_time = start_end_time_array[0]
+            let end_time = start_end_time_array[1]
+            let sessions = slot.arrayValue
             var slotView = UIView(frame: CGRectMake(8.0, top, pageView.frame.size.width - 16.0, 100.0 * CGFloat(sessions.count)))
             top = CGRectGetMaxY(slotView.frame) + 28.0
             pageView.addSubview(slotView)
@@ -172,8 +195,8 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
             bulletLineTimeContainer.addSubview(line)
 
             var startTime = UILabel(frame: CGRectMake(12.0, 0.0, CGRectGetWidth(bulletLineTimeContainer.frame) - 12.0, 12.0))
-            var start_datetime = slot["start_datetime"].stringValue
-            var startTimeObj = start_datetime.toDate(format: DateFormat.ISO8601)!
+            var start_datetime = start_time.trimmed()
+            var startTimeObj = start_datetime.toDate(format: DateFormat.Custom("HH:mm:ss"))!
 
             startTime.text = startTimeObj.toString(format: DateFormat.Custom("hh:mm a"))
             startTime.font = UIFont(name: "HelveticaNeue-CondensedBold", size: 11.0)
@@ -181,8 +204,8 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
             bulletLineTimeContainer.addSubview(startTime)
 
             var endTime = UILabel(frame: CGRectMake(12.0, 14.0, CGRectGetWidth(bulletLineTimeContainer.frame) - 12.0, 12.0))
-            var end_datetime = slot["end_datetime"].stringValue
-            var endTimeObj = end_datetime.toDate(format: DateFormat.ISO8601)!
+            var end_datetime = end_time.trimmed()
+            var endTimeObj = end_datetime.toDate(format: DateFormat.Custom("HH:mm:ss"))!
 
             endTime.text = endTimeObj.toString(format: DateFormat.Custom("hh:mm a"))
             endTime.font = UIFont(name: "HelveticaNeue-CondensedBold", size: 11.0)
@@ -212,7 +235,7 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
                 favoriteImageView.userInteractionEnabled = false
                 favoriteImageView.contentMode = UIViewContentMode.ScaleAspectFit
                 favoriteImageView.image = favoriteInactiveImage
-                favoriteView.tag = session["session_id"].intValue
+                favoriteView.tag = session["id"].intValue
                 favoriteView.addSubview(favoriteImageView)
                 let favoriteViewTap = UITapGestureRecognizer(target: self, action: Selector("favoriteTapped:"))
                 favoriteView.addGestureRecognizer(favoriteViewTap)
@@ -223,13 +246,13 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
                 feedbackImageView.userInteractionEnabled = false
                 feedbackImageView.contentMode = UIViewContentMode.ScaleAspectFit
                 feedbackImageView.image = feedbackInactiveImage
-                feedbackView.tag = session["session_id"].intValue
+                feedbackView.tag = session["id"].intValue
                 feedbackView.addSubview(feedbackImageView)
                 let feedbackViewTap = UITapGestureRecognizer(target: self, action: Selector("feedbackTapped:"))
                 feedbackView.addGestureRecognizer(feedbackViewTap)
 
-                favoriteSessionIdMap[String(session["session_id"].intValue)] = 0
-                feedbackSessionIdMap[String(session["session_id"].intValue)] = 0
+                favoriteSessionIdMap[String(session["id"].intValue)] = 0
+                feedbackSessionIdMap[String(session["id"].intValue)] = 0
             }
 
             var textContainer = UIView(frame: CGRectMake(CGRectGetMaxX(iconsContainer.frame), 0, CGRectGetWidth(slotView.frame) * 3.0 / 5.0, CGRectGetHeight(slotView.frame)))
@@ -238,25 +261,25 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
             for (index, session) in enumerate(sessions) {
                 let heading = UILabel(frame: CGRectMake(0, CGFloat(index) * 100.0, CGRectGetWidth(textContainer.frame), 0.0))
                 heading.lineBreakMode = NSLineBreakMode.ByWordWrapping
-                heading.numberOfLines = 0
+                heading.numberOfLines = 2
                 heading.adjustsFontSizeToFitWidth = true
-                heading.text = session["title"].stringValue
+                heading.text = session["name"].stringValue.trimmed().replaceMatches("\r\n", withString: " ", ignoreCase: false)
                 heading.font = UIFont(name: "HelveticaNeue-Bold", size: 11.0)
 
                 var options: NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin | NSStringDrawingOptions.UsesFontLeading
                 var labelRect = heading.attributedText.boundingRectWithSize(CGSizeMake(heading.frame.size.width, 35.0), options: options, context: nil)
                 heading.frame = CGRectMake(0, CGFloat(index) * 100.0, CGRectGetWidth(textContainer.frame), labelRect.size.height)
-                heading.sizeToFit()
                 textContainer.addSubview(heading)
 
                 let description = UILabel(frame: CGRectMake(0, CGRectGetMaxY(heading.frame) + 1.0, CGRectGetWidth(textContainer.frame), 0.0))
                 description.lineBreakMode = NSLineBreakMode.ByWordWrapping
                 description.numberOfLines = 4
                 description.font = UIFont(name: "HelveticaNeue-Light", size: 9.0)
-                description.text = session["description"].stringValue
+                description.text = session["session"]["description"].stringValue.trimmed().replaceMatches("\r\n", withString: " ", ignoreCase: false)
 
                 options = NSStringDrawingOptions.UsesLineFragmentOrigin | NSStringDrawingOptions.UsesFontLeading
-                labelRect = description.attributedText.boundingRectWithSize(CGSizeMake(description.frame.size.width, CGFloat.max), options: options, context: nil)
+                labelRect = description.attributedText.boundingRectWithSize(CGSizeMake(description.frame.size.width, 100.0 - (CGRectGetHeight(heading.frame) + 1.0)), options: options, context: nil)
+                println(labelRect.height)
                 description.frame = CGRectMake(0, CGRectGetMaxY(heading.frame) + 1.0, CGRectGetWidth(textContainer.frame), labelRect.size.height)
                 textContainer.addSubview(description)
             }

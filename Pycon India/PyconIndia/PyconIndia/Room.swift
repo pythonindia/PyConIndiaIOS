@@ -13,13 +13,11 @@ class Room {
 
     var id: Int
     var name: String
-    var floor: String
     var note = ""
 
-    init(id: Int, name: String, floor: String, note: String) {
+    init(id: Int, name: String, note: String) {
         self.id = id
         self.name = name
-        self.floor = floor
         self.note = note
     }
 
