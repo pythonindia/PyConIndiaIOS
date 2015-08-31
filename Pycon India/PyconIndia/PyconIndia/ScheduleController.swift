@@ -25,7 +25,6 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
         2: UIImage(named: "images/pyconAudi2.png")!,
         3: UIImage(named: "images/pyconAudi3.png")!,
         4: UIImage(named: "images/pyconAudi1.png")!,
-        5: UIImage(named: "images/pyconAudi1.png")!
     ]
 
     let favoriteInactiveImage = UIImage(named: "images/pyconFavorite.png")!
@@ -176,7 +175,8 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
             let start_end_time_array = timeNsDate[time]!.explode("-")
             let start_time = start_end_time_array[0]
             let end_time = start_end_time_array[1]
-            let sessions = slot.arrayValue
+            var sessions = slot.arrayValue
+            sessions.sort({$0["room_id"].intValue < $1["room_id"].intValue})
             var slotView = UIView(frame: CGRectMake(8.0, top, pageView.frame.size.width - 16.0, 100.0 * CGFloat(sessions.count)))
             top = CGRectGetMaxY(slotView.frame) + 28.0
             pageView.addSubview(slotView)
