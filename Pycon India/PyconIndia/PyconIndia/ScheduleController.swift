@@ -47,7 +47,6 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         self.automaticallyAdjustsScrollViewInsets = false
         super.viewDidLoad()
-        println("Getting schedule")
         createSimpleLogo()
         self.title = "PyConIndia 2015"
         self.designPager()
@@ -279,7 +278,6 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
 
                 options = NSStringDrawingOptions.UsesLineFragmentOrigin | NSStringDrawingOptions.UsesFontLeading
                 labelRect = description.attributedText.boundingRectWithSize(CGSizeMake(description.frame.size.width, 100.0 - (CGRectGetHeight(heading.frame) + 1.0)), options: options, context: nil)
-                println(labelRect.height)
                 description.frame = CGRectMake(0, CGRectGetMaxY(heading.frame) + 1.0, CGRectGetWidth(textContainer.frame), labelRect.size.height)
                 textContainer.addSubview(description)
             }
