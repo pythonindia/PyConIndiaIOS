@@ -42,19 +42,28 @@ class SplashController: PyConIndiaViewController {
         if let deviceUUIDReg = deviceUUIDRegistered {
             showApp()
         } else {
-            let uuid = NSUUID().UUIDString
-            cloud.registerDevice(uuid,
-                success: {
-                response in
-                    println(response)
-                },
-                error: {
-                    responseError in
-                    let banner = Banner(title: "Cannot reach server", subtitle: "Please check your internet connection", image: UIImage(named: "Icon"), backgroundColor: UIColor(red: 60/255.0, green: 178/255.0, blue: 192/255.0, alpha: 1.0))
-                    banner.dismissesOnTap = true
-                    banner.show(duration: 3.0)
-            })
+            tryToRegisterAndShowApp()
         }
+    }
+
+    func tryToRegisterAndShowApp() {
+        let uuid = NSUUID().UUIDString
+        cloud.registerDevice(uuid,
+            success: {
+                response in
+                self.defaults.setValue(response["uuid"].stringValue, forKey: "uuid")
+                println("I am here")
+                self.showApp()
+            },
+            error: {
+                errorResponse in
+                println(errorResponse)
+                let banner = Banner(title: "Cannot reach server", subtitle: "Please check your internet connection", image: UIImage(named: "Icon"), backgroundColor: UIColor(red: 60/255.0, green: 178/255.0, blue: 192/255.0, alpha: 1.0))
+                banner.dismissesOnTap = true
+                banner.show(duration: 3.0)
+                banner.didDismissBlock = self.tryToRegisterAndShowApp
+                banner.didTapBlock = self.tryToRegisterAndShowApp
+        })
     }
 
     func showApp() {
@@ -71,6 +80,7 @@ class SplashController: PyConIndiaViewController {
                 self.navigationController?.pushViewController(schedule, animated: true)
                 }, error: {
                     errorResponse in
+                    println(errorResponse)
                     self.loader.stopAnimating()
                     if self.isDataStoredAlready() {
                         let schedule = ScheduleController(usingPreviousData: true)
@@ -79,11 +89,14 @@ class SplashController: PyConIndiaViewController {
                         let banner = Banner(title: "Cannot reach server", subtitle: "Please check your internet connection", image: UIImage(named: "Icon"), backgroundColor: UIColor(red: 60/255.0, green: 178/255.0, blue: 192/255.0, alpha: 1.0))
                         banner.dismissesOnTap = true
                         banner.show(duration: 3.0)
+                        banner.didDismissBlock = self.showApp
+                        banner.didTapBlock = self.showApp
                     }
             })
             },
             error: {
                 errorResponse in
+                println(errorResponse)
                 self.loader.stopAnimating()
                 if self.isDataStoredAlready() {
                     let schedule = ScheduleController(usingPreviousData: true)
@@ -92,6 +105,8 @@ class SplashController: PyConIndiaViewController {
                     let banner = Banner(title: "No Internet Connection", subtitle: "Please check your internet connection", image: UIImage(named: "Icon"), backgroundColor: UIColor(red: 60/255.0, green: 178/255.0, blue: 192/255.0, alpha: 1.0))
                     banner.dismissesOnTap = true
                     banner.show(duration: 3.0)
+                    banner.didDismissBlock = self.showApp
+                    banner.didTapBlock = self.showApp
                 }
             }
         )

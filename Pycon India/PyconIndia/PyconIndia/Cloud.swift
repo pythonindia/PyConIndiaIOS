@@ -14,29 +14,34 @@ import Alamofire
 class Cloud {
 
     let BASE_URL = "https://in.pycon.org/cfp/api/v1/"
-    var manager: Alamofire.Manager!
 
     func apiRequest(path: String, method: Alamofire.Method = .GET, parameters: [String: AnyObject] = [:], successCallback: ((JSON) -> ())?, errorCallback: ((NSError) -> ())?) {
-        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-        configuration.timeoutIntervalForRequest = 4 // seconds
-        configuration.timeoutIntervalForResource = 4
-        manager = Alamofire.Manager(configuration: configuration)
 
-        manager.request(method, path, parameters: parameters, encoding: ParameterEncoding.JSON)
-            .responseJSON{ (request, response, data, error) in
-                if let errorResponse = error {
-                    errorCallback?(errorResponse)
-                } else {
-                    let jsonData = JSON(data!)
-                    successCallback?(jsonData)
-                }
+        if method == .POST {
+            Alamofire.request(method, path, parameters: parameters, encoding: ParameterEncoding.JSON)
+                .responseJSON{ (request, response, data, error) in
+                    if let errorResponse = error {
+                        errorCallback?(errorResponse)
+                    } else {
+                        let jsonData = JSON(data!)
+                        successCallback?(jsonData)
+                    }
+            }
+        } else {
+            Alamofire.request(method, path, parameters: parameters)
+                .responseJSON{ (request, response, data, error) in
+                    if let errorResponse = error {
+                        errorCallback?(errorResponse)
+                    } else {
+                        let jsonData = JSON(data!)
+                        successCallback?(jsonData)
+                    }
+            }
         }
-
-        //manager.request(<#method: Method#>, <#URLString: URLStringConvertible#>, parameters: <#[String : AnyObject]?#>, encoding: ParameterEncoding.)
     }
 
     func registerDevice(uuid: String, success: ((JSON) -> ())?, error: ((NSError) -> ())?) {
-        let path = BASE_URL + "devices"
+        let path = BASE_URL + "devices/"
         self.apiRequest(path,
             method: .POST,
             parameters: ["uuid": uuid],
