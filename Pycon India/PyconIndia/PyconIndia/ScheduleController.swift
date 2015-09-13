@@ -10,11 +10,11 @@ import Foundation
 import UIKit
 import SwiftyJSON
 import SwiftDate
+import BRYXBanner
 
 // The schedule
 class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
 
-    let bounds = UIScreen.mainScreen().bounds
     var scrollView: UIScrollView!
     let tabbedPagerHeight: CGFloat = 44.0
     var bottomPager: TabbedPageView!
@@ -35,12 +35,16 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
     let DAY1 = "2015-10-02"
     let DAY2 = "2015-10-03"
     let DAY3 = "2015-10-04"
+    var usingPreviousData: Bool
+    var sessionIdToSession: [Int: JSON] = [:]
 
     required init(coder aDecoder: NSCoder) {
+        usingPreviousData = false
         super.init(coder: aDecoder)
     }
 
-    init() {
+    init(usingPreviousData: Bool) {
+        self.usingPreviousData = usingPreviousData
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -51,6 +55,12 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
         self.title = "PyConIndia 2015"
         self.designPager()
         view.backgroundColor = UIColor.whiteColor()
+
+        if self.usingPreviousData {
+            let banner = Banner(title: "Warning! No Internet Connection", subtitle: "Displaying previously stored schedule. May not match with current schedule.", image: UIImage(named: "Icon"), backgroundColor: UIColor(red:231/255, green:76/255, blue:60/255, alpha:1.0))
+            banner.dismissesOnTap = true
+            banner.show(duration: 3.0)
+        }
 
         var top = navigationController!.navigationBar.frame.size.height + UIApplication.sharedApplication().statusBarFrame.size.height
 
@@ -258,7 +268,11 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
             slotView.addSubview(textContainer)
 
             for (index, session) in enumerate(sessions) {
+                sessionIdToSession[session["id"].intValue] = session
+                let tapGesture = UITapGestureRecognizer(target: self, action: Selector("descriptionTapped:"))
+
                 let heading = UILabel(frame: CGRectMake(0, CGFloat(index) * 100.0, CGRectGetWidth(textContainer.frame), 0.0))
+                heading.tag = session["id"].intValue
                 heading.lineBreakMode = NSLineBreakMode.ByWordWrapping
                 heading.numberOfLines = 2
                 heading.adjustsFontSizeToFitWidth = true
@@ -271,10 +285,13 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
                 textContainer.addSubview(heading)
 
                 let description = UILabel(frame: CGRectMake(0, CGRectGetMaxY(heading.frame) + 1.0, CGRectGetWidth(textContainer.frame), 0.0))
+                description.userInteractionEnabled = true
+                description.tag = session["id"].intValue
                 description.lineBreakMode = NSLineBreakMode.ByWordWrapping
                 description.numberOfLines = 4
                 description.font = UIFont(name: "HelveticaNeue-Light", size: 9.0)
                 description.text = session["session"]["description"].stringValue.trimmed().replaceMatches("\r\n", withString: " ", ignoreCase: false)
+                description.addGestureRecognizer(tapGesture)
 
                 options = NSStringDrawingOptions.UsesLineFragmentOrigin | NSStringDrawingOptions.UsesFontLeading
                 labelRect = description.attributedText.boundingRectWithSize(CGSizeMake(description.frame.size.width, 100.0 - (CGRectGetHeight(heading.frame) + 1.0)), options: options, context: nil)
@@ -289,6 +306,14 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
         defaults.synchronize()
 
         pageView.contentSize = CGSizeMake(pageView.contentSize.width, top)
+    }
+
+    func descriptionTapped(sender: UIGestureRecognizer) {
+        let session = sessionIdToSession[sender.view!.tag]
+        if let ses = session {
+            let presentation = PresentationController(session: ses)
+            self.navigationController?.pushViewController(presentation, animated: true)
+        }
     }
 
     func feedbackTapped(sender: UITapGestureRecognizer) {

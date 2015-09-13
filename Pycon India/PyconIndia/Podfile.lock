@@ -1,15 +1,21 @@
 PODS:
   - Alamofire (1.2.3)
+  - BRYXBanner (0.3.1)
+  - SnapKit (0.12.0)
   - SwiftDate (1.0.9)
   - SwiftyJSON (2.2.0)
 
 DEPENDENCIES:
   - Alamofire (~> 1.2)
+  - BRYXBanner
+  - SnapKit (~> 0.12.0)
   - SwiftDate
   - SwiftyJSON (~> 2.2.0)
 
 SPEC CHECKSUMS:
   Alamofire: 5550bf0b575ed1a4bf9be572f9463e1015cc169e
+  BRYXBanner: 861ef4de1c6676cad00877b847b8ccc9b9ab87d7
+  SnapKit: 00c388aa3bf1944c1b55472f31e841f75bd83882
   SwiftDate: 930b6a93bc8e5e23f96f414cd01089fc8aba4518
   SwiftyJSON: 0b3e6c07af17ff745e77e8e9984097b55c956e5c
 
