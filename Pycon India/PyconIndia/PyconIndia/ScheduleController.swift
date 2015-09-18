@@ -24,7 +24,7 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
         1: UIImage(named: "images/pyconAudi1.png")!,
         2: UIImage(named: "images/pyconAudi2.png")!,
         3: UIImage(named: "images/pyconAudi3.png")!,
-        4: UIImage(named: "images/pyconAudi1.png")!,
+        4: UIImage(named: "images/pyconAudi4.png")!,
     ]
 
     let favoriteInactiveImage = UIImage(named: "images/pyconFavorite.png")!
@@ -346,8 +346,29 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
                     favoriteSessionIdMap[String(sender.view!.tag)] = valueToSet
                     defaults.setObject(favoriteSessionIdMap, forKey: "favoriteSessionIdMap")
                     defaults.synchronize()
-                    return
                 }
+            }
+        }
+        UIApplication.sharedApplication().cancelAllLocalNotifications()
+        for (sessionId, favorite) in favoriteSessionIdMap {
+            if favorite == 1 {
+                let session = sessionIdToSession[sessionId.toInt()!]!
+                let eventDate = session["event_date"].stringValue
+                let startTime = session["start_time"].stringValue
+                let dateFormat = NSDateFormatter()
+                dateFormat.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                let dateString = eventDate + " " + startTime
+                let startTimeOb = dateFormat.dateFromString(dateString)?.addSeconds(-90)
+                let currentDate = NSDate()
+                var difference = startTimeOb!.timeIntervalSinceDate(currentDate)
+                difference = 10.0
+                println(difference)
+                var notification = UILocalNotification()
+                notification.alertTitle = session["type"].stringValue.capitalized + " is about to start!"
+                notification.alertAction = "open"
+                notification.alertBody = session["name"].stringValue
+                notification.fireDate = NSDate(timeIntervalSinceNow: difference)
+                UIApplication.sharedApplication().scheduleLocalNotification(notification)
             }
         }
     }

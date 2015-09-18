@@ -29,6 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationBarAppearance.barTintColor = UIColor(red: 60/255.0, green: 178/255.0, blue: 192/255.0, alpha: 1.0)
         let navigationFont = UIFont(name: "Helvetica-Light", size: 15.0)!
         navigationBarAppearance.titleTextAttributes = [NSFontAttributeName: navigationFont, NSForegroundColorAttributeName: UIColor.whiteColor()]
+        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: .Alert, categories: nil))
         return true
     }
 
