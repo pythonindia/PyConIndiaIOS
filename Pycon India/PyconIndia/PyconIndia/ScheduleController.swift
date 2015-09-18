@@ -37,6 +37,7 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
     let DAY3 = "2015-10-04"
     var usingPreviousData: Bool
     var sessionIdToSession: [Int: JSON] = [:]
+    var feedbackImageViews: [Int: UIImageView] = [:]
 
     required init(coder aDecoder: NSCoder) {
         usingPreviousData = false
@@ -46,6 +47,20 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
     init(usingPreviousData: Bool) {
         self.usingPreviousData = usingPreviousData
         super.init(nibName: nil, bundle: nil)
+    }
+
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        let feedbackSessionIdMap = self.defaults.dictionaryForKey("feedbackSessionIdMap") as! [String: Int]
+        for (id, feedbackImageView) in feedbackImageViews {
+            if let feedback = feedbackSessionIdMap[String(id)] {
+                if feedback == 1 {
+                    feedbackImageView.image = feedbackActiveImage
+                } else {
+                    feedbackImageView.image = feedbackInactiveImage
+                }
+            }
+        }
     }
 
     override func viewDidLoad() {
@@ -86,7 +101,7 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
         let roomString = defaults.stringForKey("rooms")!
         let scheduleResponse = JSON(data: scheduleString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)!)
         let roomResponse = JSON(data: roomString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)!)
-
+        
         let rms = roomResponse.arrayValue
         for rm in rms {
             let id = rm["id"].intValue
@@ -95,7 +110,7 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
             let room = Room(id: id, name: name, note: note)
             self.rooms[id] = room
         }
-        self.designSchedules(scheduleResponse)
+        designSchedules(scheduleResponse)
     }
 
     // Returns the current day of the hackathon
@@ -166,9 +181,10 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
 
         var top: CGFloat = 28.0
         let slots = details
+        let defaults = NSUserDefaults.standardUserDefaults()
 
-        var favoriteSessionIdMap: [String: AnyObject] = [:]
-        var feedbackSessionIdMap: [String: AnyObject] = [:]
+        var favoriteSessionIdMap: [String: Int] = defaults.dictionaryForKey("favoriteSessionIdMap") as? [String: Int] ?? [:]
+        var feedbackSessionIdMap: [String: Int] = defaults.dictionaryForKey("feedbackSessionIdMap") as? [String: Int] ?? [:]
         var slotsArray: [(NSDate, JSON)] = []
         var timeNsDate: [NSDate : String] = [:]
         for (time, slot) in slots {
@@ -243,7 +259,9 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
                 let favoriteImageView = UIImageView(frame: CGRectMake(5.0, 5.0, 15.0, 15.0))
                 favoriteImageView.userInteractionEnabled = false
                 favoriteImageView.contentMode = UIViewContentMode.ScaleAspectFit
-                favoriteImageView.image = favoriteInactiveImage
+                let sessionId = String(session["id"].intValue)
+                let favorite = favoriteSessionIdMap[sessionId] ?? 0
+                favoriteImageView.image = favorite == 0 ? favoriteInactiveImage : favoriteActiveImage
                 favoriteView.tag = session["id"].intValue
                 favoriteView.addSubview(favoriteImageView)
                 let favoriteViewTap = UITapGestureRecognizer(target: self, action: Selector("favoriteTapped:"))
@@ -251,17 +269,17 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
 
                 let feedbackView = UIView(frame: CGRectMake(CGRectGetMaxX(favoriteView.frame), CGRectGetMaxY(audiLabel.frame) + 20.0, 25.0, 25.0))
                 iconsContainer.addSubview(feedbackView)
-                let feedbackImageView = UIImageView(frame: CGRectMake(5.0, 5.0, 15.0, 15.0))
+                var feedbackImageView = UIImageView(frame: CGRectMake(5.0, 5.0, 15.0, 15.0))
+                feedbackImageViews[session["id"].intValue] = feedbackImageView
                 feedbackImageView.userInteractionEnabled = false
                 feedbackImageView.contentMode = UIViewContentMode.ScaleAspectFit
-                feedbackImageView.image = feedbackInactiveImage
+                let feedback = feedbackSessionIdMap[sessionId] ?? 0
+                feedbackImageView.image = feedback == 0 ? feedbackInactiveImage : feedbackActiveImage
                 feedbackView.tag = session["id"].intValue
                 feedbackView.addSubview(feedbackImageView)
-                let feedbackViewTap = UITapGestureRecognizer(target: self, action: Selector("feedbackTapped:"))
-                feedbackView.addGestureRecognizer(feedbackViewTap)
 
-                favoriteSessionIdMap[String(session["id"].intValue)] = 0
-                feedbackSessionIdMap[String(session["id"].intValue)] = 0
+                favoriteSessionIdMap[String(session["id"].intValue)] = favoriteSessionIdMap[String(session["id"].intValue)] ?? 0
+                feedbackSessionIdMap[String(session["id"].intValue)] = feedbackSessionIdMap[String(session["id"].intValue)] ?? 0
             }
 
             var textContainer = UIView(frame: CGRectMake(CGRectGetMaxX(iconsContainer.frame), 0, CGRectGetWidth(slotView.frame) * 3.0 / 5.0, CGRectGetHeight(slotView.frame)))
@@ -300,7 +318,7 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
             }
         }
 
-        let defaults = NSUserDefaults.standardUserDefaults()
+
         defaults.setObject(favoriteSessionIdMap, forKey: "favoriteSessionIdMap")
         defaults.setObject(feedbackSessionIdMap, forKey: "feedbackSessionIdMap")
         defaults.synchronize()
@@ -316,28 +334,7 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
         }
     }
 
-    func feedbackTapped(sender: UITapGestureRecognizer) {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        var feedbackSessionIdMap = defaults.dictionaryForKey("feedbackSessionIdMap") as! [String: Int]
-        let setValue = feedbackSessionIdMap[String(sender.view!.tag)]
-        let valueToSet = setValue == 0 ? 1 : 0
-
-        if let view = sender.view {
-            for subview in view.subviews {
-                if let imageView = subview as? UIImageView {
-                    imageView.image = valueToSet == 0 ? feedbackInactiveImage : feedbackActiveImage
-                }
-            }
-        }
-
-        feedbackSessionIdMap[String(sender.view!.tag)] = valueToSet
-        defaults.setObject(feedbackSessionIdMap, forKey: "feedbackSessionIdMap")
-        defaults.synchronize()
-        println(feedbackSessionIdMap)
-    }
-
     func favoriteTapped(sender: UITapGestureRecognizer) {
-        let defaults = NSUserDefaults.standardUserDefaults()
         var favoriteSessionIdMap = defaults.dictionaryForKey("favoriteSessionIdMap") as! [String: Int]
         let setValue = favoriteSessionIdMap[String(sender.view!.tag)]
         let valueToSet = setValue == 0 ? 1 : 0
@@ -346,14 +343,13 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
             for subview in view.subviews {
                 if let imageView = subview as? UIImageView {
                     imageView.image = valueToSet == 0 ? favoriteInactiveImage : favoriteActiveImage
+                    favoriteSessionIdMap[String(sender.view!.tag)] = valueToSet
+                    defaults.setObject(favoriteSessionIdMap, forKey: "favoriteSessionIdMap")
+                    defaults.synchronize()
+                    return
                 }
             }
         }
-
-        favoriteSessionIdMap[String(sender.view!.tag)] = valueToSet
-        defaults.setObject(favoriteSessionIdMap, forKey: "favoriteSessionIdMap")
-        defaults.synchronize()
-        println(favoriteSessionIdMap)
     }
 
     func designPager() {

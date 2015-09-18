@@ -15,9 +15,12 @@ class Cloud {
 
     let BASE_URL = "https://in.pycon.org/cfp/api/v1/"
 
-    func apiRequest(path: String, method: Alamofire.Method = .GET, parameters: [String: AnyObject] = [:], successCallback: ((JSON) -> ())?, errorCallback: ((NSError) -> ())?) {
+    func apiRequest(path: String, method: Alamofire.Method = .GET, parameters: [String: AnyObject] = [:], headers: [String: String]? = nil, successCallback: ((JSON) -> ())?, errorCallback: ((NSError) -> ())?) {
 
         if method == .POST {
+            if let head = headers {
+                Alamofire.Manager.sharedInstance.session.configuration.HTTPAdditionalHeaders = head
+            }
             Alamofire.request(method, path, parameters: parameters, encoding: ParameterEncoding.JSON)
                 .responseJSON{ (request, response, data, error) in
                     if let errorResponse = error {
@@ -40,11 +43,13 @@ class Cloud {
         }
     }
 
-    func registerDevice(uuid: String, success: ((JSON) -> ())?, error: ((NSError) -> ())?) {
-        let path = BASE_URL + "devices/"
+    func sendFeedback(params: [String: AnyObject], success: ((JSON) -> ())?, error: ((NSError) -> ())?) {
+        let path = BASE_URL + "feedback/"
+        let uuid = NSUserDefaults.standardUserDefaults().stringForKey("uuid")!
         self.apiRequest(path,
             method: .POST,
-            parameters: ["uuid": uuid],
+            parameters: params,
+            headers: ["Authorization": "Token: " + uuid],
             successCallback: {
                 response in
                 success?(response)
@@ -54,6 +59,37 @@ class Cloud {
                 error?(errorResponse)
             }
         )
+    }
+
+    func registerDevice(uuid: String, success: ((JSON) -> ())?, error: ((NSError) -> ())?) {
+        let path = BASE_URL + "devices/"
+        self.apiRequest(path,
+            method: .POST,
+            parameters: ["uuid": uuid],
+            successCallback: {
+                response in
+                if response["uuid"].stringValue != "" {
+                    success?(response)
+                }
+            },
+            errorCallback: {
+                errorResponse in
+                error?(errorResponse)
+            }
+        )
+    }
+
+    func getFeedBack(success: ((JSON) -> ())?, error: ((NSError) -> ())?) {
+        let path = BASE_URL + "feedback_questions/?conference_id=1"
+        self.apiRequest(path,
+            successCallback: {
+                response in
+                success?(response)
+            },
+            errorCallback: {
+                errorResponse in
+                error?(errorResponse)
+        })
     }
 
     func getSchedule(success: ((JSON) -> ())?, error: ((NSError) -> ())?) {

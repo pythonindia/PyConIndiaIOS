@@ -14,6 +14,7 @@ class PyConIndiaViewController: UIViewController {
 
     let cloud = Cloud()
     let bounds = UIScreen.mainScreen().bounds
+    let defaults = NSUserDefaults.standardUserDefaults()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,13 +39,13 @@ class PyConIndiaViewController: UIViewController {
 
     func createBackLogo() {
         var backIcon = UIImage(named: "images/back.png")
-        var backView = UIImageView(frame: CGRectMake(0.0, 0.0, 20.0, 20.0))
+        var responseButton = UIButton(frame: CGRectMake(0.0, 0.0, 35.0, 35.0))
+        responseButton.addTarget(self, action: "backButtonPressed", forControlEvents: UIControlEvents.TouchUpInside)
+        var backView = UIImageView(frame: CGRectMake(7.5, 7.5, 20.0, 20.0))
         backView.image = backIcon
         backView.contentMode = UIViewContentMode.ScaleAspectFit
-        var responseButton = UIButton(frame: backView.frame)
-        responseButton.addTarget(self, action: "backButtonPressed", forControlEvents: UIControlEvents.TouchUpInside)
-        backView.addSubview(responseButton)
-        var backButton = UIBarButtonItem(customView: backView)
+        responseButton.addSubview(backView)
+        var backButton = UIBarButtonItem(customView: responseButton)
         self.navigationItem.leftBarButtonItem = backButton
     }
 

@@ -50,6 +50,7 @@ code_sign() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework 'Alamofire.framework'
   install_framework 'BRYXBanner.framework'
+  install_framework 'DLRadioButton.framework'
   install_framework 'SnapKit.framework'
   install_framework 'SwiftDate.framework'
   install_framework 'SwiftyJSON.framework'
@@ -57,6 +58,7 @@ fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework 'Alamofire.framework'
   install_framework 'BRYXBanner.framework'
+  install_framework 'DLRadioButton.framework'
   install_framework 'SnapKit.framework'
   install_framework 'SwiftDate.framework'
   install_framework 'SwiftyJSON.framework'
