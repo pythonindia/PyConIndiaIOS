@@ -361,11 +361,10 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
                 let startTimeOb = dateFormat.dateFromString(dateString)?.addSeconds(-90)
                 let currentDate = NSDate()
                 var difference = startTimeOb!.timeIntervalSinceDate(currentDate)
-                difference = 10.0
-                println(difference)
                 var notification = UILocalNotification()
+                notification.timeZone = NSTimeZone(abbreviation: "IST")
                 notification.alertTitle = session["type"].stringValue.capitalized + " is about to start!"
-                notification.alertAction = "open"
+                notification.alertAction = "Open"
                 notification.alertBody = session["name"].stringValue
                 notification.fireDate = NSDate(timeIntervalSinceNow: difference)
                 UIApplication.sharedApplication().scheduleLocalNotification(notification)
