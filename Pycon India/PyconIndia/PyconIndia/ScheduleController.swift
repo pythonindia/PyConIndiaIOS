@@ -12,6 +12,7 @@ import SwiftyJSON
 import SwiftDate
 import BRYXBanner
 
+
 // The schedule
 class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
 
@@ -67,8 +68,8 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
         self.automaticallyAdjustsScrollViewInsets = false
         super.viewDidLoad()
         createSimpleLogo()
+        createRefreshLogo()
         self.title = "PyConIndia 2015"
-        self.designPager()
         view.backgroundColor = UIColor.whiteColor()
 
         if self.usingPreviousData {
@@ -78,7 +79,7 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
         }
 
         var top = navigationController!.navigationBar.frame.size.height + UIApplication.sharedApplication().statusBarFrame.size.height
-
+        self.designPager()
         scrollView = UIScrollView(frame: CGRectMake(0, top, bounds.width, bounds.height - tabbedPagerHeight - top))
         scrollView.pagingEnabled = true
         scrollView.showsHorizontalScrollIndicator = false
@@ -91,6 +92,22 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
         self.scrollView.contentSize = CGSize(width: pagesScrollViewSize.width * 3.0, height: pagesScrollViewSize.height)
         self.view.addSubview(scrollView)
 
+        designUI()
+    }
+
+    func designUI() {
+
+        for view in scrollView.subviews {
+            if let v = view as? UIView {
+                v.removeFromSuperview()
+            }
+        }
+
+        pageViews = []
+        rooms = [:]
+        sessionIdToSession = [:]
+        feedbackImageViews = [:]
+
         setupPages(true)
         for index in 1...3 {
             loadPage(index)
@@ -101,7 +118,7 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
         let roomString = defaults.stringForKey("rooms")!
         let scheduleResponse = JSON(data: scheduleString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)!)
         let roomResponse = JSON(data: roomString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)!)
-        
+
         let rms = roomResponse.arrayValue
         for rm in rms {
             let id = rm["id"].intValue
@@ -111,6 +128,24 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
             self.rooms[id] = room
         }
         designSchedules(scheduleResponse)
+    }
+
+    override func refreshButtonPressed() {
+        SwiftSpinner.show("Refreshing Schedule...", animated: true)
+        cloud.getSchedule({
+            response in
+            let scheduleResponseString = response.rawString()!
+            self.defaults.setValue(scheduleResponseString, forKey: "schedule")
+            self.designUI()
+            SwiftSpinner.hide(completion: nil)
+        },
+            error: {
+                error in
+                SwiftSpinner.hide(completion: nil)
+                let banner = Banner(title: "No Internet Connection", subtitle: "Please check your internet connection", image: UIImage(named: "Icon"), backgroundColor: UIColor(red: 60/255.0, green: 178/255.0, blue: 192/255.0, alpha: 1.0))
+                banner.dismissesOnTap = true
+                banner.show(duration: 3.0)
+        })
     }
 
     // Returns the current day of the hackathon
@@ -249,8 +284,8 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
                 iconsContainer.addSubview(audiImage)
 
                 let audiLabel = UILabel(frame: CGRectMake(0, CGRectGetMaxY(audiImage.frame) + 1.0, CGRectGetWidth(iconsContainer.frame), 12.0))
-                audiLabel.font = UIFont(name: "HelveticaNeue-CondensedBold", size: 11.0)
-                audiLabel.text = "AUDI"
+                audiLabel.font = UIFont(name: "HelveticaNeue-CondensedBold", size: 9.0)
+                audiLabel.text = room_id == 4 ? "BUFFET HALL" : "AUDI"
                 audiLabel.textAlignment = .Center
                 iconsContainer.addSubview(audiLabel)
 

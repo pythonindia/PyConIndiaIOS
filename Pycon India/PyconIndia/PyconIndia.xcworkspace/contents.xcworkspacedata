@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:PyconIndia.xcodeproj">
+      location = "group:/Users/rishimukherjee1/pycon/PyConIndiaIOS/Pycon India/PyconIndia/PyConIndia.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">

@@ -49,6 +49,22 @@ class PyConIndiaViewController: UIViewController {
         self.navigationItem.leftBarButtonItem = backButton
     }
 
+    func createRefreshLogo() {
+        var refreshIcon = UIImage(named: "images/refresh.png")
+        var responseButton = UIButton(frame: CGRectMake(0.0, 0.0, 35.0, 35.0))
+        responseButton.addTarget(self, action: "refreshButtonPressed", forControlEvents: UIControlEvents.TouchUpInside)
+        var backView = UIImageView(frame: CGRectMake(7.5, 7.5, 20.0, 20.0))
+        backView.image = refreshIcon
+        backView.contentMode = UIViewContentMode.ScaleAspectFit
+        responseButton.addSubview(backView)
+        var backButton = UIBarButtonItem(customView: responseButton)
+        self.navigationItem.rightBarButtonItem = backButton
+    }
+
+    func refreshButtonPressed() {
+
+    }
+
     func backButtonPressed() {
         self.navigationController?.popViewControllerAnimated(true)
     }

@@ -59,6 +59,9 @@ class FeedbackController: PyConIndiaViewController, UITextViewDelegate {
             callback: submitPressed)
         view.addSubview(submitButton)
 
+        let tap = UITapGestureRecognizer(target: self, action: Selector("viewTapped"))
+        view.addGestureRecognizer(tap)
+
         let center = NSNotificationCenter.defaultCenter()
         center.addObserver(self, selector: "handleKeyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
         center.addObserver(self, selector: "handleKeyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
@@ -153,7 +156,7 @@ class FeedbackController: PyConIndiaViewController, UITextViewDelegate {
             var allowed_choices = choice["allowed_choices"].arrayValue
             allowed_choices.sort({$0["value"].intValue < $1["value"].intValue})
             let firstChoiceJSON = allowed_choices.first!
-            let firstButton = PyconRadioButton(frame: CGRectMake(0, previousHeight, scrollView.frame.size.width, 20.0))
+            let firstButton = PyconRadioButton(frame: CGRectMake(0, previousHeight + 3.0, scrollView.frame.size.width, 20.0))
             firstButton.id = firstChoiceJSON["id"].intValue
             firstButton.value = firstChoiceJSON["value"].intValue
             firstButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
@@ -168,7 +171,7 @@ class FeedbackController: PyConIndiaViewController, UITextViewDelegate {
                 if index == 0 {
                     continue
                 }
-                let button = PyconRadioButton(frame: CGRectMake(0, previousHeight, scrollView.frame.size.width, 20.0))
+                let button = PyconRadioButton(frame: CGRectMake(0, previousHeight + 3.0, scrollView.frame.size.width, 20.0))
                 button.id = allowedChoice["id"].intValue
                 button.value = allowedChoice["value"].intValue
                 button.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
@@ -207,7 +210,6 @@ class FeedbackController: PyConIndiaViewController, UITextViewDelegate {
             textView.layer.borderColor = UIColor.grayColor().CGColor
             textView.layer.borderWidth = 1.0
             textView.layer.cornerRadius = 3.0
-            textView.returnKeyType = UIReturnKeyType.Done
             textView.font = UIFont(name: "HelveticaNeue-Condensed", size: 15.0)
             textView.textContainerInset = UIEdgeInsetsMake(5.0, 5.0, 5.0, 5.0)
             textView.tintColor = UIColor.blackColor()
@@ -219,15 +221,11 @@ class FeedbackController: PyConIndiaViewController, UITextViewDelegate {
             textIdToTextView[text["id"].stringValue] = textView
         }
 
-        scrollView.contentSize = CGSizeMake(scrollView.frame.size.width, previousHeight)
+        scrollView.contentSize = CGSizeMake(scrollView.frame.size.width, previousHeight + 10.0)
     }
 
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-        if text == "\n" {
-            textView.resignFirstResponder()
-            return false
-        }
-        return true
+    func viewTapped() {
+        view.endEditing(true)
     }
 
     func submitPressed(sender: LoadingButton) {

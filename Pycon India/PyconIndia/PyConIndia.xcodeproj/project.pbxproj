@@ -34,6 +34,7 @@
 		DF93CE1F1B3FAD2700492CB6 /* PresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF93CE1E1B3FAD2700492CB6 /* PresentationController.swift */; };
 		DF93CE211B3FAD6F00492CB6 /* FeedbackController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF93CE201B3FAD6F00492CB6 /* FeedbackController.swift */; };
 		DF93CE231B41D2FA00492CB6 /* Cloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF93CE221B41D2FA00492CB6 /* Cloud.swift */; };
+		DFBD6FCE1BAFDEE000F993FD /* SwiftSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBD6FCD1BAFDEE000F993FD /* SwiftSpinner.swift */; };
 		DFE1DDE11B46E55500D93847 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE1DDE01B46E55500D93847 /* Room.swift */; };
 		DFF59B421B45562300C80C2D /* tabbedPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF59B411B45562300C80C2D /* tabbedPageView.swift */; };
 		DFF59B431B45B4F900C80C2D /* images in Resources */ = {isa = PBXBuildFile; fileRef = DFB4AA251B45537F00CD0C6E /* images */; };
@@ -72,12 +73,12 @@
 		DF2F8AF41B93A03500570CC7 /* Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
 		DF2F8AF51B93A03500570CC7 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		DF7A39231B47EAD8006014F1 /* SplashController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashController.swift; sourceTree = "<group>"; };
-		DF93CDF71B3FA6C000492CB6 /* PyconIndia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PyconIndia.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DF93CDF71B3FA6C000492CB6 /* PyConIndia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PyConIndia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF93CDFB1B3FA6C000492CB6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DF93CDFC1B3FA6C000492CB6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DF93CDFE1B3FA6C000492CB6 /* PyconViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PyconViewController.swift; sourceTree = "<group>"; };
 		DF93CE031B3FA6C000492CB6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		DF93CE0C1B3FA6C000492CB6 /* PyconIndiaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PyconIndiaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DF93CE0C1B3FA6C000492CB6 /* PyConIndiaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PyConIndiaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF93CE111B3FA6C000492CB6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DF93CE121B3FA6C000492CB6 /* PyconIndiaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PyconIndiaTests.swift; sourceTree = "<group>"; };
 		DF93CE1C1B3FACA700492CB6 /* ScheduleController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleController.swift; sourceTree = "<group>"; };
@@ -85,6 +86,7 @@
 		DF93CE201B3FAD6F00492CB6 /* FeedbackController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackController.swift; sourceTree = "<group>"; };
 		DF93CE221B41D2FA00492CB6 /* Cloud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cloud.swift; sourceTree = "<group>"; };
 		DFB4AA251B45537F00CD0C6E /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = images; sourceTree = "<group>"; };
+		DFBD6FCD1BAFDEE000F993FD /* SwiftSpinner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftSpinner.swift; sourceTree = "<group>"; };
 		DFE1DDE01B46E55500D93847 /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		DFF59B411B45562300C80C2D /* tabbedPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = tabbedPageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -171,8 +173,8 @@
 		DF93CDF81B3FA6C000492CB6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DF93CDF71B3FA6C000492CB6 /* PyconIndia.app */,
-				DF93CE0C1B3FA6C000492CB6 /* PyconIndiaTests.xctest */,
+				DF93CDF71B3FA6C000492CB6 /* PyConIndia.app */,
+				DF93CE0C1B3FA6C000492CB6 /* PyConIndiaTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -186,6 +188,7 @@
 				DF93CE031B3FA6C000492CB6 /* Images.xcassets */,
 				DF93CDFA1B3FA6C000492CB6 /* Supporting Files */,
 				DF93CE1C1B3FACA700492CB6 /* ScheduleController.swift */,
+				DFBD6FCD1BAFDEE000F993FD /* SwiftSpinner.swift */,
 				DF93CE1E1B3FAD2700492CB6 /* PresentationController.swift */,
 				DF1F1A2D1BA5A31E00335E8B /* Markingbird.swift */,
 				DF93CE201B3FAD6F00492CB6 /* FeedbackController.swift */,
@@ -227,9 +230,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		DF93CDF61B3FA6C000492CB6 /* PyconIndia */ = {
+		DF93CDF61B3FA6C000492CB6 /* PyConIndia */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DF93CE161B3FA6C000492CB6 /* Build configuration list for PBXNativeTarget "PyconIndia" */;
+			buildConfigurationList = DF93CE161B3FA6C000492CB6 /* Build configuration list for PBXNativeTarget "PyConIndia" */;
 			buildPhases = (
 				C1F1B207C20F6720E2F1F141 /* Check Pods Manifest.lock */,
 				DF93CDF31B3FA6C000492CB6 /* Sources */,
@@ -242,14 +245,14 @@
 			);
 			dependencies = (
 			);
-			name = PyconIndia;
+			name = PyConIndia;
 			productName = PyconIndia;
-			productReference = DF93CDF71B3FA6C000492CB6 /* PyconIndia.app */;
+			productReference = DF93CDF71B3FA6C000492CB6 /* PyConIndia.app */;
 			productType = "com.apple.product-type.application";
 		};
-		DF93CE0B1B3FA6C000492CB6 /* PyconIndiaTests */ = {
+		DF93CE0B1B3FA6C000492CB6 /* PyConIndiaTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DF93CE191B3FA6C000492CB6 /* Build configuration list for PBXNativeTarget "PyconIndiaTests" */;
+			buildConfigurationList = DF93CE191B3FA6C000492CB6 /* Build configuration list for PBXNativeTarget "PyConIndiaTests" */;
 			buildPhases = (
 				DF93CE081B3FA6C000492CB6 /* Sources */,
 				DF93CE091B3FA6C000492CB6 /* Frameworks */,
@@ -260,9 +263,9 @@
 			dependencies = (
 				DF93CE0E1B3FA6C000492CB6 /* PBXTargetDependency */,
 			);
-			name = PyconIndiaTests;
+			name = PyConIndiaTests;
 			productName = PyconIndiaTests;
-			productReference = DF93CE0C1B3FA6C000492CB6 /* PyconIndiaTests.xctest */;
+			productReference = DF93CE0C1B3FA6C000492CB6 /* PyConIndiaTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -283,7 +286,7 @@
 					};
 				};
 			};
-			buildConfigurationList = DF93CDF21B3FA6C000492CB6 /* Build configuration list for PBXProject "PyconIndia" */;
+			buildConfigurationList = DF93CDF21B3FA6C000492CB6 /* Build configuration list for PBXProject "PyConIndia" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -296,8 +299,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				DF93CDF61B3FA6C000492CB6 /* PyconIndia */,
-				DF93CE0B1B3FA6C000492CB6 /* PyconIndiaTests */,
+				DF93CDF61B3FA6C000492CB6 /* PyConIndia */,
+				DF93CE0B1B3FA6C000492CB6 /* PyConIndiaTests */,
 			);
 		};
 /* End PBXProject section */
@@ -394,6 +397,7 @@
 				DF2F8B171B93A03500570CC7 /* Float.swift in Sources */,
 				DFF59B421B45562300C80C2D /* tabbedPageView.swift in Sources */,
 				DF2F8B1B1B93A03500570CC7 /* NSDate.swift in Sources */,
+				DFBD6FCE1BAFDEE000F993FD /* SwiftSpinner.swift in Sources */,
 				DF2F8B141B93A03500570CC7 /* Dictionary.swift in Sources */,
 				DF93CE231B41D2FA00492CB6 /* Cloud.swift in Sources */,
 				DF1F1A2E1BA5A31E00335E8B /* Markingbird.swift in Sources */,
@@ -416,7 +420,7 @@
 /* Begin PBXTargetDependency section */
 		DF93CE0E1B3FA6C000492CB6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = DF93CDF61B3FA6C000492CB6 /* PyconIndia */;
+			target = DF93CDF61B3FA6C000492CB6 /* PyConIndia */;
 			targetProxy = DF93CE0D1B3FA6C000492CB6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -514,7 +518,7 @@
 				INFOPLIST_FILE = PyconIndia/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = PyConIndia;
 			};
 			name = Debug;
 		};
@@ -527,7 +531,7 @@
 				INFOPLIST_FILE = PyconIndia/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = PyConIndia;
 			};
 			name = Release;
 		};
@@ -545,7 +549,7 @@
 				);
 				INFOPLIST_FILE = PyconIndiaTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = PyConIndiaTests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PyconIndia.app/PyconIndia";
 			};
 			name = Debug;
@@ -560,7 +564,7 @@
 				);
 				INFOPLIST_FILE = PyconIndiaTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = PyConIndiaTests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PyconIndia.app/PyconIndia";
 			};
 			name = Release;
@@ -568,7 +572,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		DF93CDF21B3FA6C000492CB6 /* Build configuration list for PBXProject "PyconIndia" */ = {
+		DF93CDF21B3FA6C000492CB6 /* Build configuration list for PBXProject "PyConIndia" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DF93CE141B3FA6C000492CB6 /* Debug */,
@@ -577,7 +581,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DF93CE161B3FA6C000492CB6 /* Build configuration list for PBXNativeTarget "PyconIndia" */ = {
+		DF93CE161B3FA6C000492CB6 /* Build configuration list for PBXNativeTarget "PyConIndia" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DF93CE171B3FA6C000492CB6 /* Debug */,
@@ -586,7 +590,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DF93CE191B3FA6C000492CB6 /* Build configuration list for PBXNativeTarget "PyconIndiaTests" */ = {
+		DF93CE191B3FA6C000492CB6 /* Build configuration list for PBXNativeTarget "PyConIndiaTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DF93CE1A1B3FA6C000492CB6 /* Debug */,
