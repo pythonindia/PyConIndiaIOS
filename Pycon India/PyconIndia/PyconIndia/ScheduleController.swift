@@ -344,7 +344,9 @@ class ScheduleController: PyConIndiaViewController, UIScrollViewDelegate {
                 description.numberOfLines = 4
                 description.font = UIFont(name: "HelveticaNeue-Light", size: 9.0)
                 description.text = session["session"]["description"].stringValue.trimmed().replaceMatches("\r\n", withString: " ", ignoreCase: false)
-                description.addGestureRecognizer(tapGesture)
+                if session["session"]["description"].stringValue.trimmed() != "" {
+                    description.addGestureRecognizer(tapGesture)
+                }
 
                 options = NSStringDrawingOptions.UsesLineFragmentOrigin | NSStringDrawingOptions.UsesFontLeading
                 labelRect = description.attributedText.boundingRectWithSize(CGSizeMake(description.frame.size.width, 100.0 - (CGRectGetHeight(heading.frame) + 1.0)), options: options, context: nil)
